@@ -3,6 +3,6 @@ server:
 spring:
   cloud:
     zookeeper:
-      connect-string: 118.190.244.62:2181
+      connect-string: 000.000.000.000:2181
   application:
     name: cloud-comsumer-order
