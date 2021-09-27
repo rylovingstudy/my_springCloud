@@ -19,7 +19,7 @@ public class OrderController {
 //    public static final String PAYMENT_URL = "http://localhost:8001";
 
     public static final String PAYMENT_URL = "http://localhost:8001";
-    
+
     @Resource
     private RestTemplate restTemplate;
     @Resource
@@ -33,7 +33,7 @@ public class OrderController {
     }
 
     @GetMapping("payment/selectOne/{id}")
-    public CommonResult<Payment> getPayment(@PathVariable("id") long id) {
+    public CommonResult<Payment> getPayment(@PathVariable("id") Long id) {
         return restTemplate.getForObject(PAYMENT_URL + "/payment/selectOne/" + id, CommonResult.class);
     }
 
