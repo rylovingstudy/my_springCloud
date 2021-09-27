@@ -16,7 +16,7 @@ import java.util.List;
  */
 @Service("paymentService")
 public class PaymentServiceImpl implements PaymentService {
-    @Resource
+    @Resource//同 @Autowired，一个是spring的，一个是java自带的
     private PaymentDao paymentDao;
 
     /**
@@ -34,7 +34,7 @@ public class PaymentServiceImpl implements PaymentService {
      * 查询多条数据
      *
      * @param offset 查询起始位置
-     * @param limit 查询条数
+     * @param limit  查询条数
      * @return 对象列表
      */
     @Override
