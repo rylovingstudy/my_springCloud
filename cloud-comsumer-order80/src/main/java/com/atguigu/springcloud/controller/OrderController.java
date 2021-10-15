@@ -1,5 +1,7 @@
 package com.atguigu.springcloud.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.atguigu.springcloud.entities.CommonResult;
 import com.atguigu.springcloud.entities.Payment;
 import com.atguigu.springcloud.lb.LoadBalaner;
@@ -10,6 +12,7 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
 import java.net.URI;
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -18,7 +21,9 @@ public class OrderController {
 
 //    public static final String PAYMENT_URL = "http://localhost:8001";
 
-    public static final String PAYMENT_URL = "http://localhost:8001";
+    // 通过在eureka上注册过的微服务名称调用
+    public static final String PAYMENT_URL = "http://CLOUD-PAYMENT-SERVICE";
+    public static final String PAYMENT_SERVICE = "CLOUD-PAYMENT-SERVICE";
 
     @Resource
     private RestTemplate restTemplate;
@@ -38,15 +43,19 @@ public class OrderController {
     }
 
     @GetMapping("payment/lb")
-    public String getPaymentLB() {
-        List<ServiceInstance> instances = discoveryClient.getInstances("CLOUD-PAYMENT-SERVICE");
+    public Object getPaymentLB() {
+        List<ServiceInstance> instances = discoveryClient.getInstances(PAYMENT_SERVICE);
         if (instances == null || instances.size() == 0) {
             return null;
         }
         ServiceInstance serviceInstance = loadBalaner.instance(instances);
         URI uri = serviceInstance.getUri();
         System.out.println(uri + "/payment/lb");
-        return restTemplate.getForObject(uri + "/payment/lb", String.class);
+
+        String s = uri + "/payment/lb" + " ------ " + restTemplate.getForObject(uri + "/payment/lb", String.class);
+        HashMap result = new HashMap<>();
+        result.put(s, s);
+        return (result);
 //        return uri+"/payment/lb";
     }
 }

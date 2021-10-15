@@ -18,7 +18,7 @@ import java.util.List;
  * @since 2020-03-06 14:22:26
  */
 @RestController
-@RequestMapping("payment")
+@RequestMapping("/payment")
 public class PaymentController {
     /**
      * 服务对象
@@ -37,35 +37,35 @@ public class PaymentController {
      * @param id 主键
      * @return 单条数据
      */
-    @GetMapping("selectOne/{id}")
+    @GetMapping("/selectOne/{id}")
     public CommonResult<Payment> selectOne(@PathVariable("id") Long id) {
         Payment payment = this.paymentService.queryById(id);
 
-        return new CommonResult<Payment>(200,"select success 8002!",payment);
+        return new CommonResult<Payment>(200, "select success 8002!", payment);
     }
 
-    @PostMapping("create")
+    @PostMapping("/create")
     public CommonResult create(@RequestBody Payment payment) {
         Payment insert = this.paymentService.insert(payment);
         System.out.println(insert);
         System.out.println("1234567890");
-        return new CommonResult(200,"insert success" ,insert);
+        return new CommonResult(200, "insert success", insert);
     }
 
-    @GetMapping("discovery")
+    @GetMapping("/discovery")
     public Object discovery() {
         List<String> services = discoveryClient.getServices();
-        services.forEach(service->{
-            System.out.println("---service-->"+service);
+        services.forEach(service -> {
+            System.out.println("---service-->" + service);
         });
         List<ServiceInstance> instances = discoveryClient.getInstances("CLOUD-PAYMENT-SERVICE");
-        instances.forEach(instance->{
-            System.out.println(instance.getServiceId()+"\t"+instance.getHost()+"\t"+instance.getPort()+"\t"+instance.getUri());
+        instances.forEach(instance -> {
+            System.out.println(instance.getServiceId() + "\t" + instance.getHost() + "\t" + instance.getPort() + "\t" + instance.getUri());
         });
         return this.discoveryClient;
     }
 
-    @GetMapping("lb")
+    @GetMapping("/lb")
     public String getPaymentLB() {
         return serverPort;
     }
