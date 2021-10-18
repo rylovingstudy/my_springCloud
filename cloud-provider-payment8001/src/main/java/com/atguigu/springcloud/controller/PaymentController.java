@@ -30,7 +30,8 @@ public class PaymentController {
 
     @Value("${server.port}")
     private String serverPort;
-    @Autowired
+
+    @Autowired    // 服务发现
     private DiscoveryClient discoveryClient;
 
     /**
@@ -57,13 +58,12 @@ public class PaymentController {
     @GetMapping("discovery")
     public Object discovery() {
         List<String> services = discoveryClient.getServices();
-        services.forEach(service -> {
-            System.out.println("----service" + service);
-        });
+
+        services.forEach(service -> System.out.println("----service" + service));
+
         List<ServiceInstance> instances = discoveryClient.getInstances("CLOUD-PAYMENT-SERVICE");
         for (ServiceInstance instance : instances) {
             System.out.println(instance.getServiceId() + "\t" + instance.getHost() + "\t" + instance.getPort() + "\t" + instance.getUri());
-            ;
         }
 
         return this.discoveryClient;

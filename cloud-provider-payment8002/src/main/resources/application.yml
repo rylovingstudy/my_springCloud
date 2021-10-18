@@ -21,7 +21,7 @@ eureka:
       defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/
   instance: #微服务信息
     ip-address: 127.0.0.1
-    instance-id: payment:8002
-    prefer-ip-address: true
+    instance-id: payment:8002 #显示服务名
+    prefer-ip-address: true # 显示服务指向的ip
     lease-renewal-interval-in-seconds: 1
     lease-expiration-duration-in-seconds: 2
