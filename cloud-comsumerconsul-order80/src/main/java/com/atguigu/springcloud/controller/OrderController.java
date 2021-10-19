@@ -11,7 +11,7 @@ import javax.annotation.Resource;
 @RequestMapping("order")
 public class OrderController {
 
-    final private String INVOKE_URL="http://consul-payment-service";
+    final private String INVOKE_URL = "http://cloud-provider-payment";
 
     @Resource
     private RestTemplate restTemplate;
