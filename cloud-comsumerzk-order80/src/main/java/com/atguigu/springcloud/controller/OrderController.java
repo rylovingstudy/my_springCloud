@@ -14,11 +14,11 @@ public class OrderController {
     @Resource
     private RestTemplate restTemplate;
 
-    public static final String PAYENT_URL = "http://cloud-payment-service";
+    public static final String INVOKE_URL = "http://cloud-payment-service";
 
     @GetMapping("payment/zk")
     public String getpaymentInfo() {
-        String res = restTemplate.getForObject(PAYENT_URL+"/payment/zk",String.class);
+        String res = restTemplate.getForObject(INVOKE_URL + "/payment/zk", String.class);
         return res;
     }
 }
