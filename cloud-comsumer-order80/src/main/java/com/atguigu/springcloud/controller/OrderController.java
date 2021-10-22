@@ -7,6 +7,7 @@ import com.atguigu.springcloud.entities.Payment;
 import com.atguigu.springcloud.lb.LoadBalaner;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -40,6 +41,15 @@ public class OrderController {
     @GetMapping("payment/selectOne/{id}")
     public CommonResult<Payment> getPayment(@PathVariable("id") Long id) {
         return restTemplate.getForObject(PAYMENT_URL + "/payment/selectOne/" + id, CommonResult.class);
+    }
+
+    @GetMapping("payment/selectOne/getForEntity/{id}")
+    public CommonResult<Payment> getPayment2(@PathVariable("id") Long id) {
+        ResponseEntity<CommonResult> entity = restTemplate.getForEntity(PAYMENT_URL + "/payment/selectOne/" + id, CommonResult.class);
+        if (entity.getStatusCode().is2xxSuccessful()) {
+            return entity.getBody();
+        }
+        return new CommonResult<>(444, "fault");
     }
 
     @GetMapping("payment/lb")
