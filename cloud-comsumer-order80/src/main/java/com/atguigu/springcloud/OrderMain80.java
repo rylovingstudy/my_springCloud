@@ -7,7 +7,7 @@ import org.springframework.cloud.netflix.ribbon.RibbonClient;
 
 @SpringBootApplication
 //@EnableEurekaClient
-@RibbonClient(name = "CLOUD-PAYMENT-SERVICE", configuration = MyselfRule.class)
+@RibbonClient(name = "CLOUD-PAYMENT-SERVICE", configuration = MyselfRule.class)//ribbon的默认负载规则替换
 public class OrderMain80 {
     public static void main(String[] args) {
         SpringApplication.run(OrderMain80.class, args);
