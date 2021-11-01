@@ -1,10 +1,8 @@
 package com.atguigu.springcloud.controller;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.atguigu.springcloud.entities.CommonResult;
 import com.atguigu.springcloud.entities.Payment;
-import com.atguigu.springcloud.lb.LoadBalaner;
+import com.atguigu.springcloud.lb.LoadBalancer;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +27,7 @@ public class OrderController {
     @Resource
     private RestTemplate restTemplate;
     @Resource
-    private LoadBalaner loadBalaner;
+    private LoadBalancer loadBalancer;
     @Resource
     private DiscoveryClient discoveryClient;
 
@@ -58,9 +56,16 @@ public class OrderController {
         if (instances == null || instances.size() == 0) {
             return null;
         }
-        ServiceInstance serviceInstance = loadBalaner.instance(instances);
+        ServiceInstance serviceInstance = loadBalancer.instance(instances);
         URI uri = serviceInstance.getUri();
-        System.out.println(uri + "/payment/lb");
+        System.out.println(
+                "uri: " + serviceInstance.getUri() +
+                        " host: " + serviceInstance.getHost() +
+                        " meta: " + serviceInstance.getMetadata() +
+                        " id: " + serviceInstance.getServiceId() +
+                        " scheme: " + serviceInstance.getScheme() +
+                        " port: " + serviceInstance.getPort()
+        );
 
         String s = uri + "/payment/lb" + " ------ " + restTemplate.getForObject(uri + "/payment/lb", String.class);
         HashMap result = new HashMap<>();
