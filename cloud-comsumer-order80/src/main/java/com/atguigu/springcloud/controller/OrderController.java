@@ -56,6 +56,7 @@ public class OrderController {
         if (instances == null || instances.size() == 0) {
             return null;
         }
+        //调用轮询到的服务实例
         ServiceInstance serviceInstance = loadBalancer.instance(instances);
         URI uri = serviceInstance.getUri();
         System.out.println(
