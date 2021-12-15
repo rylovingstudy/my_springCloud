@@ -74,7 +74,7 @@ public class PaymentController {
         return serverPort;
     }
 
-    @GetMapping("feign/timeout")
+    @GetMapping("feign/timeout")//对外暴露的restful风格服务地址
     public String getFeignTimeOut() {
         try {
             TimeUnit.SECONDS.sleep(3);
